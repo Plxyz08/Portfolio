@@ -9,7 +9,7 @@ Portfolio profesional interactivo que muestra mis habilidades, experiencia, proy
 
 ## 🌐 Demo en vivo
 
-Visita mi portafolio en [mi sitio web](https://portafolio-plxyz08s-projects.vercel.app/) para conocer más sobre mis proyectos y habilidades.
+Visita mi portafolio en [mi sitio web](https://portfolio-plxyz08s-projects.vercel.app/) para conocer más sobre mis proyectos y habilidades.
 
 ## ✨ Características Principales
 
