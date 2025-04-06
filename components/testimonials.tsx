@@ -125,7 +125,7 @@ export default function Testimonials() {
             <CarouselContent>
               {testimonials.map((testimonial) => (
                 <CarouselItem key={testimonial.id}>
-                  <Card className="h-full flex flex-col">
+                  <Card className="h-full flex flex-col ml-5 mr-5">
                     <CardContent className="pt-6 flex-grow">
                       <div className="mb-4 text-primary dark:text-blue-400">
                         <Quote className="h-8 w-8" />
@@ -152,8 +152,8 @@ export default function Testimonials() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-2" />
-            <CarouselNext className="right-2" />
+            <CarouselPrevious className="left-1 bg-blue-500 hover:bg-blue-600 text-white border-blue-600" />
+            <CarouselNext className="right-1 bg-blue-500 hover:bg-blue-600 text-white border-blue-600" />
           </Carousel>
         </div>
       </div>

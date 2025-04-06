@@ -44,47 +44,47 @@ export default function SidebarNavigation() {
     {
       name: "Inicio",
       href: "#",
-      icon: <Home className="h-4 w-4" />,
+      icon: <Home className="h-4 w-4 md:h-5 md:w-5" />,
     },
     {
       name: "Sobre Mí",
       href: "#about",
-      icon: <User className="h-4 w-4" />,
+      icon: <User className="h-4 w-4 md:h-5 md:w-5" />,
     },
     {
       name: "Habilidades",
       href: "#skills",
-      icon: <Code2 className="h-4 w-4" />,
+      icon: <Code2 className="h-4 w-4 md:h-5 md:w-5" />,
     },
     {
       name: "Experiencia",
       href: "#experience",
-      icon: <Briefcase className="h-4 w-4" />,
+      icon: <Briefcase className="h-4 w-4 md:h-5 md:w-5" />,
     },
     {
       name: "Freelance",
       href: "#freelance",
-      icon: <Laptop className="h-4 w-4" />,
+      icon: <Laptop className="h-4 w-4 md:h-5 md:w-5" />,
     },
     {
       name: "Educación y Certificaciones",
       href: "#education",
-      icon: <GraduationCap className="h-4 w-4" />,
+      icon: <GraduationCap className="h-4 w-4 md:h-5 md:w-5" />,
     },
     {
       name: "Proyectos",
       href: "#projects",
-      icon: <FolderGit2 className="h-4 w-4" />,
+      icon: <FolderGit2 className="h-4 w-4 md:h-5 md:w-5" />,
     },
     {
       name: "Testimonios",
       href: "#testimonials",
-      icon: <MessageSquareQuote className="h-4 w-4" />,
+      icon: <MessageSquareQuote className="h-4 w-4 md:h-5 md:w-5" />,
     },
     {
       name: "Contacto",
       href: "#contact",
-      icon: <Mail className="h-4 w-4" />,
+      icon: <Mail className="h-4 w-4 md:h-5 md:w-5" />,
     },
   ]
 
@@ -147,15 +147,15 @@ export default function SidebarNavigation() {
 
   return (
     <>
-      {/* Desktop Sidebar - Ahora transparente y sin logo */}
+      {/* Desktop Sidebar - Mejorado para diferentes tamaños de pantalla */}
       <motion.aside
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-        className="fixed left-0 top-0 bottom-0 w-20 z-50 hidden md:flex flex-col items-center py-8"
+        className="fixed left-0 top-0 bottom-0 w-16 sm:w-18 md:w-20 z-50 hidden md:flex flex-col items-center py-6 lg:py-8"
       >
-        {/* Navigation Items - Ahora empezando desde arriba sin logo */}
-        <nav className="flex-1 flex flex-col items-center space-y-5 py-4">
+        {/* Navigation Items - Con mejor espaciado */}
+        <nav className="flex-1 flex flex-col items-center space-y-4 lg:space-y-5 py-4">
           {navItems.map((item) => {
             const isActive = activeSection === item.href
 
@@ -181,7 +181,7 @@ export default function SidebarNavigation() {
                     variant="ghost"
                     size="icon"
                     className={cn(
-                      "relative w-10 h-10 rounded-xl",
+                      "relative w-10 h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-xl",
                       isActive ? "text-primary dark:text-white" : "text-muted-foreground hover:text-foreground",
                     )}
                     onClick={() => scrollToSection(item.href)}
@@ -198,7 +198,7 @@ export default function SidebarNavigation() {
                   </Button>
                 </motion.div>
 
-                {/* Tooltip */}
+                {/* Tooltip - Mejorado para diferentes tamaños de pantalla */}
                 <div className="absolute left-full ml-2 px-2 py-1 bg-background/80 backdrop-blur-sm border border-border/50 rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 shadow-md z-50">
                   {item.name}
                 </div>
@@ -207,8 +207,8 @@ export default function SidebarNavigation() {
           })}
         </nav>
 
-        {/* Bottom Actions */}
-        <div className="mt-auto flex flex-col items-center space-y-4">
+        {/* Bottom Actions - Mejor espaciado */}
+        <div className="mt-auto flex flex-col items-center space-y-3 lg:space-y-4">
           <MiniGameButton variant="ghost" size="icon" showText={false} />
 
           {mounted && (
@@ -238,7 +238,7 @@ export default function SidebarNavigation() {
         </div>
       </motion.aside>
 
-      {/* Mobile Header */}
+      {/* Mobile Header - Mejorado */}
       <header className="fixed top-0 left-0 right-0 h-16 bg-background/80 backdrop-blur-md border-b border-border/50 z-40 flex md:hidden items-center px-4">
         <div className="flex justify-between items-center w-full">
           <Link href="#" onClick={() => scrollToSection("#")} className="flex items-center gap-2">
@@ -248,13 +248,19 @@ export default function SidebarNavigation() {
             <span className="font-bold text-lg">Sebastián Muñoz</span>
           </Link>
 
-          <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(true)} aria-label="Open menu">
-            <Menu className="h-6 w-6" />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label="Open menu"
+            className="h-10 w-10 rounded-full bg-primary/10 dark:bg-white/10 backdrop-blur-sm"
+          >
+            <Menu className="h-5 w-5" />
           </Button>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Mejorado */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -262,9 +268,9 @@ export default function SidebarNavigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-background/95 backdrop-blur-md z-50 md:hidden"
+            className="fixed inset-0 bg-background/95 backdrop-blur-md z-50 md:hidden overflow-y-auto"
           >
-            <div className="container h-full flex flex-col py-4">
+            <div className="container min-h-full flex flex-col py-4">
               <div className="flex justify-between items-center">
                 <Link href="#" className="flex items-center gap-2" onClick={() => scrollToSection("#")}>
                   <div className="relative w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
@@ -272,16 +278,23 @@ export default function SidebarNavigation() {
                   </div>
                   <span className="text-lg font-bold">Sebastián Muñoz</span>
                 </Link>
-                <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu">
-                  <X className="h-6 w-6" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Close menu"
+                  className="h-10 w-10 rounded-full bg-primary/10 dark:bg-white/10 backdrop-blur-sm"
+                >
+                  <X className="h-5 w-5" />
                 </Button>
               </div>
 
+              {/* Menú móvil mejorado */}
               <motion.nav
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.1 }}
-                className="flex flex-col items-start justify-start flex-1 space-y-2 mt-8 pb-20 px-2"
+                className="flex flex-col items-start justify-start flex-1 space-y-2 mt-6 pb-16 px-2"
               >
                 {navItems.map((item, index) => {
                   const isActive = activeSection === item.href
@@ -297,7 +310,7 @@ export default function SidebarNavigation() {
                       <Button
                         variant="ghost"
                         className={cn(
-                          "w-full justify-start text-lg gap-3 h-14 rounded-xl",
+                          "w-full justify-start text-base sm:text-lg gap-3 h-12 sm:h-14 rounded-xl",
                           isActive
                             ? "bg-primary/10 text-primary dark:bg-white/10 dark:text-white"
                             : "text-muted-foreground hover:text-foreground",
@@ -307,6 +320,7 @@ export default function SidebarNavigation() {
                         <motion.div
                           animate={{ scale: isActive ? 1.1 : 1 }}
                           transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                          className="flex items-center justify-center w-6 h-6"
                         >
                           {item.icon}
                         </motion.div>
@@ -318,25 +332,32 @@ export default function SidebarNavigation() {
                 })}
               </motion.nav>
 
-              {/* Mobile Bottom Actions */}
-              <div className="border-t border-border/30 pt-4 space-y-4">
+              {/* Mobile Bottom Actions - Mejorado */}
+              <div className="border-t border-border/30 pt-4 space-y-4 mt-auto">
                 <div className="flex justify-between items-center">
                   <span className="text-base">Cambiar tema:</span>
                   {mounted && (
-                    <Button variant="outline" size="icon" onClick={toggleTheme} className="h-12 w-12 rounded-xl">
-                      {theme === "dark" ? <Sun className="h-6 w-6 text-yellow-400" /> : <Moon className="h-6 w-6" />}
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={toggleTheme}
+                      className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl"
+                    >
+                      {theme === "dark" ? <Sun className="h-5 w-5 text-yellow-400" /> : <Moon className="h-5 w-5" />}
                     </Button>
                   )}
                 </div>
 
-                <a href="/CV/CVSebastianMuñozES.pdf" download="CV-Sebastian-Munoz.pdf" className="w-full block">
-                  <Button className="w-full gap-2 h-14 rounded-xl">
-                    <Download className="h-5 w-5" /> Descargar CV
-                  </Button>
-                </a>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <a href="/CV/CVSebastianMuñozES.pdf" download="CV-Sebastian-Munoz.pdf" className="block">
+                    <Button className="w-full gap-2 h-12 rounded-xl">
+                      <Download className="h-5 w-5" /> Descargar CV
+                    </Button>
+                  </a>
 
-                <div className="flex justify-center">
-                  <MiniGameButton showText={true} />
+                  <div className="flex justify-center sm:justify-start">
+                    <MiniGameButton showText={true} className="w-full h-12 rounded-xl" />
+                  </div>
                 </div>
               </div>
             </div>

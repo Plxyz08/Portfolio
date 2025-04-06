@@ -4,7 +4,13 @@ import type { ThemeProviderProps } from "next-themes"
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
-    <NextThemesProvider {...props} enableSystem={true} enableColorScheme={true} storageKey="portfolio-theme">
+    <NextThemesProvider
+      {...props}
+      enableSystem={true}
+      enableColorScheme={true}
+      storageKey="portfolio-theme"
+      defaultTheme="dark"
+    >
       {children}
     </NextThemesProvider>
   )
