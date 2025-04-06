@@ -29,6 +29,25 @@ type NavItem = {
   icon: React.ReactNode
 }
 
+// Añadir un nuevo hook para detectar tamaño de pantalla de portátiles
+// Añadir después de la definición de NavItem y antes de la función SidebarNavigation
+function useIsLaptop() {
+  const [isLaptop, setIsLaptop] = useState(false)
+
+  useEffect(() => {
+    const checkIsLaptop = () => {
+      // Consideramos portátil entre 768px y 1024px
+      setIsLaptop(window.innerWidth >= 768 && window.innerWidth <= 1380)
+    }
+
+    checkIsLaptop()
+    window.addEventListener("resize", checkIsLaptop)
+    return () => window.removeEventListener("resize", checkIsLaptop)
+  }, [])
+
+  return isLaptop
+}
+
 export default function SidebarNavigation() {
   const [activeSection, setActiveSection] = useState<string>("#")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -38,6 +57,28 @@ export default function SidebarNavigation() {
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Dentro de la función SidebarNavigation, añadir después de const [mounted, setMounted]
+  const isLaptop = useIsLaptop()
+  const [isFloatingMenuOpen, setIsFloatingMenuOpen] = useState(false)
+
+  // Mejorar el botón flotante para que se cierre al hacer clic fuera de él
+  // Añadir después de la definición de isFloatingMenuOpen
+
+  // Efecto para cerrar el menú flotante al hacer clic fuera
+  useEffect(() => {
+    if (!isFloatingMenuOpen) return
+
+    const handleClickOutside = (event: MouseEvent) => {
+      // Verificar si el clic fue fuera del menú flotante
+      if (isFloatingMenuOpen && event.target instanceof Element && !event.target.closest(".floating-menu-container")) {
+        setIsFloatingMenuOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [isFloatingMenuOpen])
 
   // Reordenar los navItems para que Freelance esté después de Experiencia
   const navItems: NavItem[] = [
@@ -155,7 +196,7 @@ export default function SidebarNavigation() {
         className="fixed left-0 top-0 bottom-0 w-16 sm:w-18 md:w-20 z-50 hidden md:flex flex-col items-center py-6 lg:py-8"
       >
         {/* Navigation Items - Con mejor espaciado */}
-        <nav className="flex-1 flex flex-col items-center space-y-4 lg:space-y-5 py-4">
+        <nav className="flex-1 flex flex-col items-center space-y-1.5 md:space-y-2 lg:space-y-4 py-2 md:py-2 lg:py-4">
           {navItems.map((item) => {
             const isActive = activeSection === item.href
 
@@ -181,7 +222,7 @@ export default function SidebarNavigation() {
                     variant="ghost"
                     size="icon"
                     className={cn(
-                      "relative w-10 h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-xl",
+                      "relative w-10 h-10 md:w-10 md:h-10 lg:w-12 lg:h-12 rounded-xl",
                       isActive ? "text-primary dark:text-white" : "text-muted-foreground hover:text-foreground",
                     )}
                     onClick={() => scrollToSection(item.href)}
@@ -193,7 +234,7 @@ export default function SidebarNavigation() {
                       }}
                       transition={{ type: "spring", stiffness: 300, damping: 15 }}
                     >
-                      {item.icon}
+                      <div className="scale-90 md:scale-90 lg:scale-100">{item.icon}</div>
                     </motion.div>
                   </Button>
                 </motion.div>
@@ -208,7 +249,7 @@ export default function SidebarNavigation() {
         </nav>
 
         {/* Bottom Actions - Mejor espaciado */}
-        <div className="mt-auto flex flex-col items-center space-y-3 lg:space-y-4">
+        <div className="mt-auto flex flex-col items-center space-y-3 lg:space-y-4 hidden lg:flex">
           <MiniGameButton variant="ghost" size="icon" showText={false} />
 
           {mounted && (
@@ -364,6 +405,82 @@ export default function SidebarNavigation() {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* Botón flotante para portátiles */}
+      {isLaptop && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="fixed top-4 right-4 z-50 floating-menu-container shadow-lg"
+        >
+          <Button
+            variant="outline"
+            size="icon"
+            className={`h-12 w-12 rounded-full shadow-md bg-background border-primary/20 ${
+              isFloatingMenuOpen ? "bg-primary/10" : ""
+            }`}
+            onClick={() => setIsFloatingMenuOpen(!isFloatingMenuOpen)}
+            aria-label="Opciones adicionales"
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isFloatingMenuOpen ? "close" : "menu"}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isFloatingMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </motion.div>
+            </AnimatePresence>
+          </Button>
+
+          <AnimatePresence>
+            {isFloatingMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                transition={{ duration: 0.2, type: "spring", stiffness: 300, damping: 25 }}
+                className="absolute top-12 right-0 bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg p-2 space-y-2 w-48"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                >
+                  <MiniGameButton variant="ghost" size="sm" showText={true} className="w-full justify-start" />
+                </motion.div>
+
+                {mounted && (
+                  <motion.div
+                    whileHover={{ scale: 1.05, x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  >
+                    <Button variant="ghost" size="sm" onClick={toggleTheme} className="w-full justify-start gap-2">
+                      {theme === "dark" ? <Sun className="h-4 w-4 text-yellow-400" /> : <Moon className="h-4 w-4" />}
+                      Cambiar tema
+                    </Button>
+                  </motion.div>
+                )}
+
+                <motion.div
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                >
+                  <a href="/CV-Sebastian-Munoz.pdf" download="CV-Sebastian-Munoz.pdf" className="block">
+                    <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
+                      <Download className="h-4 w-4" /> Descargar CV
+                    </Button>
+                  </a>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      )}
     </>
   )
 }
