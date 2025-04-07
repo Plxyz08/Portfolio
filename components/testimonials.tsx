@@ -32,7 +32,7 @@ export default function Testimonials() {
       id: 5,
       name: "Jonathan Hernandez",
       position: "CEO, CardSoftware",
-      image: "/Testimonios/CardSoftwarelogo.png",
+      image: "/Testimonios/CardSoftwareLogo.png",
       text: "Sebastián se integró rápidamente a nuestro equipo y entregó un trabajo excepcional en el proyecto CS Tracer. A pesar del corto plazo de un mes, su dominio de Next.js y React nos permitió avanzar significativamente en el desarrollo front-end. Su código limpio, bien estructurado y su capacidad para resolver problemas técnicos complejos fueron invaluables para nuestro proyecto.",
     },
     {
