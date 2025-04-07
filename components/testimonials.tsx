@@ -29,6 +29,13 @@ export default function Testimonials() {
       text: "Trabajar con Sebastián en el desarrollo de nuestra aplicación Tesla Lift fue una experiencia extraordinaria. Su comprensión de nuestras necesidades y su capacidad para implementar soluciones innovadoras transformaron nuestra idea en una aplicación robusta y funcional. Su profesionalismo y dedicación fueron fundamentales para el éxito del proyecto.",
     },
     {
+      id: 5,
+      name: "Jonathan Hernandez",
+      position: "CEO, CardSoftware",
+      image: "/Testimonios/CardSoftwarelogo.png",
+      text: "Sebastián se integró rápidamente a nuestro equipo y entregó un trabajo excepcional en el proyecto CS Tracer. A pesar del corto plazo de un mes, su dominio de Next.js y React nos permitió avanzar significativamente en el desarrollo front-end. Su código limpio, bien estructurado y su capacidad para resolver problemas técnicos complejos fueron invaluables para nuestro proyecto.",
+    },
+    {
       id: 3,
       name: "Diego Ballesteros",
       position: "Propietario, LaListaWBC.com",
@@ -81,6 +88,7 @@ export default function Testimonials() {
           </motion.p>
         </div>
 
+        {/* Vista de escritorio y tablet */}
         <div className="hidden md:block">
           <motion.div
             ref={ref}
@@ -120,6 +128,7 @@ export default function Testimonials() {
           </motion.div>
         </div>
 
+        {/* Vista móvil con carrusel */}
         <div className="md:hidden">
           <Carousel className="w-full">
             <CarouselContent>
